@@ -1,0 +1,26 @@
+parameters:
+    tables.guestbook.posts: %core.table_prefix%guestbook
+
+services:
+    rinsrans.guestbook.main:
+        class: rinsrans\guestbook\controller\main
+        arguments:
+            - @auth
+            - @config
+            - @controller.helper
+            - @template
+            - @user
+            - @request
+            - @dbal.conn
+            - @service_container
+            - %tables.guestbook.posts%
+            - %core.root_path%
+            - %core.php_ext%
+    rinsrans.guestbook.listener:
+        class: rinsrans\guestbook\event\listener
+        arguments:
+            - @controller.helper
+            - @template
+            - @user
+        tags:
+            - { name: event.listener }

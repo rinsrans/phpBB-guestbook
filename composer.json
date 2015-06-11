@@ -1,0 +1,26 @@
+{
+	"name": "rinsrans/guestbook",
+	"type": "phpbb-extension",
+	"description": "Adds a simple guestbook to your forum",
+	"homepage": "https://github.com/rinsrans/phpBB-guestbook",
+	"version": "0.1.1",
+	"license": "GPL-2.0",
+	"authors": [{
+			"name": "rinsrans",
+			"email": "karl.rinser@gmail.com",
+			"homepage": "https://rinsrans.github.io/",
+			"role": "Developer"
+		}],
+	"require": {
+		"php": ">=5.3.3"
+	},
+	"require-dev": {
+		"phpbb/epv": "dev-master"
+	},
+	"extra": {
+		"display-name": "Guestbook",
+		"soft-require": {
+			"phpbb/phpbb": ">=3.1.4,<3.2.*@dev"
+		}
+	}
+}

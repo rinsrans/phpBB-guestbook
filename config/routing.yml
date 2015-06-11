@@ -1,0 +1,3 @@
+rinsrans_guestbook_handle:
+    pattern: /guestbook
+    defaults: { _controller: rinsrans.guestbook.main:handle }
