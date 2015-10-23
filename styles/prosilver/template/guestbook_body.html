@@ -43,6 +43,10 @@
 		<div id="message-box">
 			<textarea name="message" id="message" rows="15" cols="76" tabindex="2" onselect="storeCaret(this);" onclick="storeCaret(this);" onkeyup="storeCaret(this);" onfocus="initInsertions();" class="inputbox" required>{MESSAGE}</textarea>
 		</div>
+                <!-- IF CAPTCHA_TEMPLATE and S_CONFIRM_CODE -->
+                    <!-- DEFINE $CAPTCHA_TAB_INDEX = 3 -->
+                    <!-- INCLUDE {CAPTCHA_TEMPLATE} -->
+                <!-- ENDIF -->
 	</fieldset>
 
 	</div>

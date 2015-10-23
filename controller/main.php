@@ -77,6 +77,16 @@ class main
 
 		include($this->phpbb_root_path . 'includes/functions_display.' . $this->php_ext);
 
+		if (!$this->user->data['is_registered'])
+		{
+			$captcha = $this->phpbb_container->get('captcha.factory')->get_instance($this->config['captcha_plugin']);
+			$captcha->init(CONFIRM_POST);
+			$this->template->assign_vars(array(
+				'S_CONFIRM_CODE'			=> true,
+				'CAPTCHA_TEMPLATE'			=> $captcha->get_template(),
+			));
+		}
+		
 		// Submit new post
 		if ($this->auth->acl_get('u_guestbook_post'))
 		{
@@ -90,10 +100,24 @@ class main
 			{
 				$preview_text = $message = $this->request->variable('message', '', true);
 				$title = $this->request->variable('title', '', true);
+				$username = $this->request->variable('username', $this->user->data['username'], true);
 
 				// Store message length...
 				$message_length = utf8_strlen($message);
 
+				if (!$this->user->data['is_registered'] )
+				{
+					$captcha_data = array(
+						'message'	=> utf8_normalize_nfc($message),
+						'subject'	=> utf8_normalize_nfc($title),
+						'username'	=> utf8_normalize_nfc($username),
+					);
+					$vc_response = $captcha->validate($captcha_data);
+					if ($vc_response)
+					{
+						$error[] = $vc_response;
+					} 
+				}
 				if (utf8_clean_string($title) === '')
 				{
 					$error[] = $this->user->lang['EMPTY_SUBJECT'];
@@ -121,6 +145,7 @@ class main
 					$this->template->assign_vars(array(
 						'TITLE'			=> $title,
 						'MESSAGE'		=> $message,
+						'USERNAME'		=> $username,
 					));
 				}
 			}
@@ -135,6 +160,7 @@ class main
 					'TITLE'					=> $title,
 					'PREVIEW_MESSAGE'		=> $preview_text,
 					'MESSAGE'				=> $message,
+					'USERNAME'				=> $username,
 				));
 			}
 
@@ -146,7 +172,6 @@ class main
 				   trigger_error($this->user->lang['FORM_INVALID']);
 				}
 
-				$username = $this->request->variable('username', $this->user->data['username'], true);
 				$uid = $bitfield = $options = '';
 				generate_text_for_storage($message, $uid, $bitfield, $options, true, true, true);
 				$sql_data = array(
@@ -190,7 +215,7 @@ class main
 			'FORUM_NAME'	=> $this->user->lang['GUESTBOOK'],
 			'U_VIEW_FORUM'	=> $base_url,
 		));
-
+		
 		// Generate pagination
 		$pagination = $this->phpbb_container->get('pagination');
 		$sql = 'SELECT COUNT(guestbook_id) AS num_posts
