@@ -7,6 +7,7 @@
 *
 */
 namespace rinsrans\guestbook\controller;
+
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class main
@@ -31,7 +32,7 @@ class main
 	protected $phpbb_root_path;
 	/** @var string php_ext */
 	protected $php_ext;
-	
+
 	/**
 	* Constructor
 	*
@@ -60,6 +61,7 @@ class main
 		$this->phpbb_root_path = $phpbb_root_path;
 		$this->php_ext = $php_ext;
 	}
+
 	/**
 	* Guestbook controller for route /guestbook
 	*
@@ -69,52 +71,52 @@ class main
 	public function handle()
 	{
 		$error = array();
-		
+
 		$this->user->add_lang_ext('rinsrans/guestbook', 'common');
 		$base_url = $this->helper->route('rinsrans_guestbook_handle', array());
-		
+
 		include($this->phpbb_root_path . 'includes/functions_display.' . $this->php_ext);
-		
+
 		// Submit new post
-		if($this->auth->acl_get('u_guestbook_post'))
+		if ($this->auth->acl_get('u_guestbook_post'))
 		{
 			include($this->phpbb_root_path . 'includes/functions_posting.' . $this->php_ext);
 			generate_smilies('inline', 0);
 			display_custom_bbcodes();
 			add_form_key('guestbook');
 			$this->user->add_lang('posting');
-			
-			if($this->request->is_set_post('preview') || $this->request->is_set_post('submit'))
+
+			if ($this->request->is_set_post('preview') || $this->request->is_set_post('submit'))
 			{
 				$preview_text = $message = $this->request->variable('message', '', true);
 				$title = $this->request->variable('title', '', true);
-			    
+
 				// Store message length...
 				$message_length = utf8_strlen($message);
-				
+
 				if (utf8_clean_string($title) === '')
 				{
 					$error[] = $this->user->lang['EMPTY_SUBJECT'];
 				}
-				
+
 				if (utf8_clean_string($message) === '')
 				{
 					$error[] = $this->user->lang['TOO_FEW_CHARS'];
 				}
- 
+
 				// Maximum message length check. 0 disables this check completely.
-				if((int) $this->config['max_post_chars'] > 0 && $message_length > (int) $this->config['max_post_chars'])
+				if ((int) $this->config['max_post_chars'] > 0 && $message_length > (int) $this->config['max_post_chars'])
 				{
 					$error[] = $this->user->lang('CHARS_POST_CONTAINS', $message_length) . '<br />' . $this->user->lang('TOO_MANY_CHARS_LIMIT', (int) $this->config['max_post_chars']);
 				}
 
 				// Minimum message length check
-				if(!$message_length || $message_length < (int) $this->config['min_post_chars'])
+				if (!$message_length || $message_length < (int) $this->config['min_post_chars'])
 				{
 					$error[] = (!$message_length) ? $this->user->lang['TOO_FEW_CHARS'] : ($this->user->lang('CHARS_POST_CONTAINS', $message_length) . '<br />' . $this->user->lang('TOO_FEW_CHARS_LIMIT', (int) $this->config['min_post_chars']));
 				}
-				
-				if(sizeof($error))
+
+				if (sizeof($error))
 				{
 					$this->template->assign_vars(array(
 						'TITLE'			=> $title,
@@ -124,7 +126,7 @@ class main
 			}
 			
 			// Preview
-			if($this->request->is_set_post('preview') && !sizeof($error))
+			if ($this->request->is_set_post('preview') && !sizeof($error))
 			{
 				generate_text_for_storage($preview_text, $uid, $bitfield, $options, true, true, true);
 				$preview_text = generate_text_for_display($preview_text, $uid, $bitfield, $options);
@@ -135,15 +137,15 @@ class main
 					'MESSAGE'				=> $message,
 				));
 			}
-			
+
 			// Store to database
-			if($this->request->is_set_post('submit') && !sizeof($error))
+			if ($this->request->is_set_post('submit') && !sizeof($error))
 			{
-				if(!check_form_key('guestbook'))
+				if (!check_form_key('guestbook'))
 				{
 				   trigger_error($this->user->lang['FORM_INVALID']);
 				}
-				
+
 				$username = $this->request->variable('username', $this->user->data['username'], true);
 				$uid = $bitfield = $options = '';
 				generate_text_for_storage($message, $uid, $bitfield, $options, true, true, true);
@@ -160,14 +162,14 @@ class main
 					' . $this->db->sql_build_array('INSERT', $sql_data);
 				$this->db->sql_query($sql);
 				trigger_error($this->user->lang['POST_SUCCESS'] . '<br /><br /><a href="' . $base_url . '">' . $this->user->lang['BACK_TO_GUESTBOOK'] . '</a>');
-			}	
+			}
 		}
-		
+
 		// Delete a post
 		$delete = $this->request->variable('delete', 0);
-		if($delete && $this->auth->acl_get('u_guestbook_delete'))
+		if ($delete && $this->auth->acl_get('u_guestbook_delete'))
 		{
-			if(confirm_box(true))
+			if (confirm_box(true))
 			{
 				$sql = 'DELETE FROM ' . $this->table_posts . '
 					WHERE guestbook_id = ' . (int) $delete;
@@ -182,15 +184,13 @@ class main
 				confirm_box(false, $this->user->lang['CONFIRM_DELETE_POST'], $s_hidden_fields);
 			}
 		}
-		
-		
-		
+
 		// Add link to breadcrumbs
 		$this->template->assign_block_vars('navlinks', array(
 			'FORUM_NAME'	=> $this->user->lang['GUESTBOOK'],
 			'U_VIEW_FORUM'	=> $base_url,
-		));	
-					
+		));
+
 		// Generate pagination
 		$pagination = $this->phpbb_container->get('pagination');
 		$sql = 'SELECT COUNT(guestbook_id) AS num_posts
@@ -198,7 +198,7 @@ class main
 		$result = $this->db->sql_query($sql);
 		$total_posts = (int) $this->db->sql_fetchfield('num_posts');
 		$this->db->sql_freeresult($result);
-	 
+
 		$sql_limit = $this->config['posts_per_page'];
 		$start = request_var('start', 0);
 		$start = $pagination->validate_start($start, $sql_limit, $total_posts);
@@ -208,9 +208,9 @@ class main
 		$sql = 'SELECT g.*, u.*
 			FROM ' . $this->table_posts . ' g, ' . USERS_TABLE . ' u
 				WHERE g.user_id = u.user_id
-			ORDER BY g.guestbook_time DESC'; 
+			ORDER BY g.guestbook_time DESC';
 		$result = $this->db->sql_query_limit($sql, $sql_limit, $start);
-		while($this->data = $this->db->sql_fetchrow($result))
+		while ($this->data = $this->db->sql_fetchrow($result))
 		{
 			$user_rank_data = phpbb_get_user_rank($this->data, $this->data['user_posts']);
 			$this->template->assign_block_vars('posts', array(
@@ -229,7 +229,6 @@ class main
 		}
 		$this->db->sql_freeresult($result);
 
-	
 		$this->template->assign_vars(array(
 			'ERROR'						=> (sizeof($error)) ? implode('<br />', $error) : '',
 			'TOTAL_POSTS'				=> $this->user->lang('VIEW_TOPIC_POSTS', (int) $total_posts),
@@ -239,7 +238,7 @@ class main
 			'S_AUTH_POST'				=> $this->auth->acl_get('u_guestbook_post'),
 			'S_AUTH_DELETE'				=> $this->auth->acl_get('u_guestbook_delete'),
 		));
-				
+
 		return $this->helper->render('guestbook_body.html');
 	}
 }

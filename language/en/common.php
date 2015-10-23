@@ -9,12 +9,12 @@
 
 if (!defined('IN_PHPBB'))
 {
-    exit;
+	exit;
 }
 
 if (empty($lang) || !is_array($lang))
 {
-    $lang = array();
+	$lang = array();
 }
 // DEVELOPERS PLEASE NOTE
 //
@@ -32,13 +32,13 @@ if (empty($lang) || !is_array($lang))
 // ’ » “ ” …
 //
 $lang = array_merge($lang, array(
-    'GUESTBOOK'				=> 'Guestbook',
+	'GUESTBOOK'				=> 'Guestbook',
 	'CONFIRM_DELETE_POST'	=> 'Are you sure you want to delete the entry from the guestbook?',
 	'POST_DELETE_SUCCESS'	=> 'The entry was successfully deleted from the guestbook!',
 	'NO_POSTS_IN_GUESTBOOK'	=> 'There are currently no guestbook entries available. Be the first to write a entry!',
 	'BACK_TO_GUESTBOOK'		=> 'Back to guestbook',
 	'POST_SUCCESS'			=> 'The entry was successfully added to the guestbook',
-	'VIEW_TOPIC_POSTS'        => array(
+	'VIEW_TOPIC_POSTS'		=> array(
 		1    => '%d post',
 		2    => '%d posts',
 	),

@@ -7,6 +7,7 @@
 *
 */
 namespace rinsrans\guestbook;
+
 /**
 * @ignore
 */

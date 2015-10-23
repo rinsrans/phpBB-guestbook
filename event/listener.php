@@ -7,9 +7,11 @@
 *
 */
 namespace rinsrans\guestbook\event;
+
 /**
 * @ignore
 */
+
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 /**
 * Event listener
@@ -23,16 +25,16 @@ class listener implements EventSubscriberInterface
 			'core.permissions'						=> 'permissions',
 		);
 	}
+
 	/* @var \phpbb\controller\helper */
 	protected $helper;
-	
+
 	/* @var \phpbb\template\template */
 	protected $template;
-	
+
 	/* @var \phpbb\user */
 	protected $user;
-	
-	
+
 	/**
 	* Constructor
 	*
@@ -47,7 +49,6 @@ class listener implements EventSubscriberInterface
 		$this->user = $user;
 	}
 
-	
 	public function permissions($event)
 	{
 		$permissions = $event['permissions'];
@@ -67,7 +68,7 @@ class listener implements EventSubscriberInterface
 		$event['categories'] = array_merge($event['categories'], $categories);
 
 	}
-	
+
 	public function page_header($event)
 	{
 		$this->user->add_lang_ext('rinsrans/guestbook', 'common');
