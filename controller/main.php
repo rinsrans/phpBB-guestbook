@@ -124,7 +124,7 @@ class main
 					));
 				}
 			}
-			
+
 			// Preview
 			if ($this->request->is_set_post('preview') && !sizeof($error))
 			{
