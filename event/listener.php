@@ -13,6 +13,7 @@ namespace rinsrans\guestbook\event;
 */
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+
 /**
 * Event listener
 */
