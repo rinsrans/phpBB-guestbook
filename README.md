@@ -13,3 +13,5 @@ Thanks to
 Licence
 -----
 <a href="http://opensource.org/licenses/gpl-2.0.php">GNU General Public License v2</a>
+
+[![Build Status](https://travis-ci.org/rinsrans/phpBB-guestbook.svg)](https://travis-ci.org/rinsrans/phpBB-guestbook)
