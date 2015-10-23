@@ -86,7 +86,7 @@ class main
 				'CAPTCHA_TEMPLATE'			=> $captcha->get_template(),
 			));
 		}
-		
+
 		// Submit new post
 		if ($this->auth->acl_get('u_guestbook_post'))
 		{
@@ -112,12 +112,14 @@ class main
 						'subject'	=> utf8_normalize_nfc($title),
 						'username'	=> utf8_normalize_nfc($username),
 					);
+
 					$vc_response = $captcha->validate($captcha_data);
 					if ($vc_response)
 					{
 						$error[] = $vc_response;
-					} 
+					}
 				}
+
 				if (utf8_clean_string($title) === '')
 				{
 					$error[] = $this->user->lang['EMPTY_SUBJECT'];
@@ -215,7 +217,7 @@ class main
 			'FORUM_NAME'	=> $this->user->lang['GUESTBOOK'],
 			'U_VIEW_FORUM'	=> $base_url,
 		));
-		
+
 		// Generate pagination
 		$pagination = $this->phpbb_container->get('pagination');
 		$sql = 'SELECT COUNT(guestbook_id) AS num_posts
