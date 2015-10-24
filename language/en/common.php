@@ -32,6 +32,7 @@ if (empty($lang) || !is_array($lang))
 // ’ » “ ” …
 //
 $lang = array_merge($lang, array(
+	'TITLE'					=> 'Title',
 	'GUESTBOOK'				=> 'Guestbook',
 	'CONFIRM_DELETE_POST'	=> 'Are you sure you want to delete the entry from the guestbook?',
 	'POST_DELETE_SUCCESS'	=> 'The entry was successfully deleted from the guestbook!',
