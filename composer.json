@@ -3,6 +3,7 @@
 	"type": "phpbb-extension",
 	"description": "Adds a simple guestbook to your forum",
 	"homepage": "https://github.com/rinsrans/phpBB-guestbook",
+        "keywords": ["phpbb", "extension", "guestbook"],
 	"version": "0.1.2",
 	"license": "GPL-2.0",
 	"authors": [{
