@@ -14,7 +14,7 @@ Licence
 -----
 <a href="http://opensource.org/licenses/gpl-2.0.php">GNU General Public License v2</a>
 <br /><br />
-<a href="https://phpbb-extensions.ga/extensions/rinsrans/guestbookk.html">
+<a href="https://phpbb-extensions.ga/extensions/rinsrans/guestbook.html">
     <img src="http://phpbb-extensions.ga/rinsrans/guestbook.png" alt="rating" />
 </a>
 <br /><br />
