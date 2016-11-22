@@ -5,16 +5,7 @@ namespace rinsrans\guestbook\tests\controller;
 class main_test extends \phpbb_database_test_case
 {
 
-	static protected function setup_extensions()
-	{
-		return array('rinsrans/guestbook');
-	}
 
-	public function setUp()
-	{
-		parent::setUp();
-
-	}
 
 	public function test_install()
 	{
