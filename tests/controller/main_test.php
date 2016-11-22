@@ -1,11 +1,14 @@
 <?php
 
-namespace tas2580\opensearch\tests\controller;
+namespace rinsrans\guestbook\tests\controller;
 
 class main_test extends \phpbb_test_case
 {
 
-
+	static protected function setup_extensions()
+	{
+		return array('rinsrans/guestbook');
+	}
 
 
 }
