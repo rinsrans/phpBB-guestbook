@@ -2,7 +2,7 @@
 
 namespace rinsrans\guestbook\tests\controller;
 
-class main_test extends \phpbb_test_case
+class main_test extends \phpbb_database_test_case
 {
 
 	static protected function setup_extensions()
