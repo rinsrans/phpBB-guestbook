@@ -2,7 +2,7 @@
 
 namespace rinsrans\guestbook\tests\controller;
 
-class main_test extends \phpbb_database_test_case
+abstract class main_test extends \phpbb_database_test_case
 {
 
 
