@@ -1,6 +1,6 @@
 <?php
 
-namespace rinsrans\guestbook\tests;
+namespace rinsrans\guestbook\tests\base;
 
 abstract class database_test extends \phpbb_database_test_case
 {

@@ -2,7 +2,7 @@
 
 namespace rinsrans\guestbook\tests\controller;
 
-abstract class main_test extends \rinsrans\guestbook\tests\database_test
+abstract class main_test extends \rinsrans\guestbook\tests\base\database_test
 {
 
 	public function setUp()
