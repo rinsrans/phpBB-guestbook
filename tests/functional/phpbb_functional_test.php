@@ -3,7 +3,7 @@
 /**
  * @group functional
  */
-class phpbb_functional_test extends \phpbb_functional_test_case
+class phpbb_functional_test extends \rinsrans\guestbook\tests\base\functional_test
 {
 	public function setUp()
 	{
