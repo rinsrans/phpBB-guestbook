@@ -25,6 +25,6 @@ class phpbb_functional_test extends \rinsrans\guestbook\tests\base\functional_te
 
 
 		$crawler = $this->request('GET', 'app.php/guestbook');
-        $this->assertGreaterThan(0, $crawler->filter('.posts')->count());
+        $this->assertGreaterThan(0, $crawler->filter('.postbody')->count());
     }
 }
